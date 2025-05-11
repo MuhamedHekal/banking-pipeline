@@ -1,0 +1,15 @@
+{
+    "input_directory": "Incoming_data",
+    "processing_directory": "Processing_data",
+    "output_directory": "Output_data",
+    "hdfs_base_path": "/data/banking",
+    "logging": {
+      "log_file": "logs/pipeline.log",
+      "log_level": "INFO"
+    },
+    "email_notifications": {
+      "smtp_server": "smtp.nexabank.com",
+      "sender": "pipeline-alerts@nexabank.com",
+      "recipients": ["data-team@nexabank.com"]
+    }
+  }
