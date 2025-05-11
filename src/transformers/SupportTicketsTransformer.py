@@ -1,3 +1,3 @@
-from ..transformers import Transformer
+from transformers import Transformer
 class SupportTicketsTransformer(Transformer):
     pass
