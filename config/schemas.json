@@ -1,0 +1,33 @@
+{
+    "schemas": {
+      "customer_profiles.csv": {
+        "columns": ["customer_id", "name", "gender", "age", "city", "account_open_date", "product_type", "customer_tier"],
+        "required": true,
+        "delimiter": ","
+      },
+      "credit_cards_billing.csv": {
+        "columns": ["bill_id", "customer_id", "month", "amount_due", "amount_paid", "payment_date"],
+        "required": true,
+        "delimiter": ","
+      },
+      "support_tickets.csv": {
+        "columns": ["ticket_id", "customer_id", "complaint_category", "complaint_date", "severity"],
+        "required": true,
+        "delimiter": ","
+      },
+      "loans.txt": {
+        "columns": ["customer_id", "loan_type", "amount_utilized", "utilization_date", "loan_reason"],
+        "required": true,
+        "delimiter": "|"
+      },
+      "transactions.json": {
+        "columns": ["sender", "receiver", "transaction_amount", "transaction_date"],
+        "required": true,
+        "format": "json"
+      }
+    },
+    "validation": {
+      "strict_mode": true,
+      "ignore_extra_columns": false
+    }
+  }
