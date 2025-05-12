@@ -2,7 +2,6 @@ from src.core.PipelineComponent import PipelineComponent
 import json
 import os 
 from datetime import datetime
-from src.core.PipelineContext import PipelineContext
 class Validator(PipelineComponent):
         def __init__(self, config_path='config/schemas.json'):
                 with open(config_path) as f:
