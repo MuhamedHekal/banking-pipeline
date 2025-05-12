@@ -1,6 +1,7 @@
 from src.core.PipelineComponent import PipelineComponent
 import json
 import os 
+from datetime import datetime
 from src.core.PipelineContext import PipelineContext
 class Validator(PipelineComponent):
         def __init__(self, config_path='config/schemas.json'):
@@ -25,26 +26,35 @@ class Validator(PipelineComponent):
                 valid = self.validate_schema(context.file_path, schema)
                 if not valid['valid_status'] :
                         context.add_error(f"the file {context.file_path} has invalid schema ")
+                        context.add_metadata("validation_result", valid)
                         return context
-                print("valid")
                 context.add_metadata("validation_result", valid)
+                return context
                        
         
         def validate_schema(self, file_path, schema):
-               """ return Json objetc 
-                {
-                validation_time: Timestamp
-                valid_status : true 
-                errors: []
-                }
-               """
-               return {'validation_time': 1, "valid_status": True, "errors" :[] }
+                """ return Json object
+                { validation_time: Timestamp , valid_status : true}
+                """
+                result = {}
+                # get header of the file_path
+                with open(file_path, 'r') as f:
+                       header = f.readline()
+                
+                header_columns= [col.strip() for col in header.split(',')]
+                result['validation_time'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                if header_columns == schema['columns']:
+                       result['valid_status'] = True
+                else:
+                       result['valid_status'] = False
+                return result
                 
 
-
+"""
+testing
 if __name__ == "__main__":
-    context = PipelineContext(file_path='/test/customer_profiles.csv')
+    context = PipelineContext(file_path='../incoming_data/2025-04-18/14/customer_profiles.csv')
     v1 = Validator()
-    v1.process(context)
-
-        
+    context = v1.process(context)
+    print(context.metadata)
+"""
