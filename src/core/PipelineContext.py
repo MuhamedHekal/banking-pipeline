@@ -1,12 +1,12 @@
-
+# Carries both the actual data and metadata about the processing state
 from datetime import datetime
 class PipelineContext:
     def __init__(self, file_path=None, data=None):
-        self.file_path = file_path
-        self.data = data
-        self.metadata = {}
-        self.errors = []
-        self._should_stop = False
+        self.file_path = file_path # file path of the data
+        self.data = data # the actual data
+        self.metadata = {} # the metadata regarding to the processing file - holding data lineage 
+        self.errors = [] # list of error that occured during the file processing
+        self._should_stop = False # flag to indicate if the pipeline should stop or not
 
     def add_metadata(self, key, value):
         self.metadata[key] = value
