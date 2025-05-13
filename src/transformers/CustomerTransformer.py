@@ -24,6 +24,19 @@ class CustomerTransformer(CsvLoader):
 
 
 
+# if __name__ == "__main__":
+#     transformer = CustomerTransformer()
+    
+#     # Change this path based on where your CSV file is
+#     csv_path = "incoming_data/2025-04-18/14/customer_profiles.csv"
+    
+#     try:
+#         data = transformer.load_data(csv_path)
+#         transformed_data = transformer.transform(data)
+#         for record in transformed_data:
+#             print(record)
+#     except Exception as e:
+#         print(f"Error during transformation: {e}")
 
 """
 if __name__ == "__main__":
