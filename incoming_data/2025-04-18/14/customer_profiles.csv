@@ -1,0 +1,5 @@
+customer_id,name,gender,age,city,account_open_date,product_type,customer_tier
+CUST000001,Matthew Crawford,Male,19,Dubai,2021-06-22,CreditCard,Gold
+CUST000002,Sophia Wang,Female,34,Cairo,2017-03-15,Loan,Silver
+CUST000003,Ali Hassan,Male,25,Riyadh,2024-01-10,DebitCard,Bronze
+

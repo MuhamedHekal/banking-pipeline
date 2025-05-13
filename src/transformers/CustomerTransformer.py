@@ -1,8 +1,29 @@
+from datetime import datetime
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from src.transformers.loaders.CsvLoader import CsvLoader
 class CustomerTransformer(CsvLoader):
      def transform(self, data):
-          pass
-     
+        for record in data:
+            account_open_date = datetime.strptime(record['account_open_date'], '%Y-%m-%d')
+            today = datetime.now()
+            tenure_years = (today - account_open_date).days / 365.25
+            record['tenure'] = int(tenure_years)
+            
+            if tenure_years > 5:
+                record['customer_segment'] = 'Loyal'
+            elif tenure_years < 1:
+                record['customer_segment'] = 'Newcomer'
+            else:
+                record['customer_segment'] = 'Normal'
+                
+            self._add_data_quality_columns(record)
+          
+        return data
+
+
+
 
 """
 if __name__ == "__main__":
