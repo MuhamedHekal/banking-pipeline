@@ -1,3 +1,3 @@
-from transformers import Transformer
-class SupportTicketsTransformer(Transformer):
+from transformers.loaders import CsvLoader
+class SupportTicketsTransformer(CsvLoader):
     pass

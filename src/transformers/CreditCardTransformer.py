@@ -1,3 +1,3 @@
-from transformers import Transformer
-class CreditCardTransformer(Transformer):
+from transformers.loaders import CsvLoader
+class CreditCardTransformer(CsvLoader):
     pass
