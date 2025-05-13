@@ -3,11 +3,9 @@ from abc import ABC, abstractmethod
 class Transformer(PipelineComponent, ABC):
     @abstractmethod
     def transform(self, data):
-        """Transform data and return the result"""
+        pass
+
     def process(self, context):
-        if not context.data and context.file_path:
-            data = self._load_data(context.file_path)
-            context.data = data
         return context
 
     def _add_data_quality_columns(self, record):
@@ -16,7 +14,32 @@ class Transformer(PipelineComponent, ABC):
         record['partition_date'] = now.strftime('%Y-%m-%d')
         record['partition_hour'] = int(now.strftime('%H'))
         return record
-        
+
     def load_data(self, file_path):
         # implemented by sup classes 
         pass
+
+
+    # class DummyTransformer(Transformer):
+#     def transform(self, data):
+#         for record in data:
+#             self._add_data_quality_columns(record)
+#         return data
+
+
+# # Main testing function
+# def main():
+#     sample_data = [
+#         {'name': 'Alice', 'transaction_amount': '100'},
+#         {'name': 'Bob', 'transaction_amount': '200'},
+#     ]
+
+#     transformer = DummyTransformer()
+#     transformed_data = transformer.transform(sample_data)
+
+#     for record in transformed_data:
+#         print(record)
+
+
+# if __name__ == "__main__":
+#     main()
