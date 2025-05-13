@@ -1,2 +1,3 @@
 class EmailNotifier():
-        pass
+        def send_email(self, subject, body):
+                pass
