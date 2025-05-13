@@ -1,3 +1,7 @@
+import sys
+import os
+from datetime import datetime 
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from src.core.PipelineComponent import PipelineComponent
 from abc import ABC, abstractmethod
 class Transformer(PipelineComponent, ABC):
