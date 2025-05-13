@@ -2,8 +2,8 @@ import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 import time
-from core import PipelineComponent  
-from services import ProcessingStateManager  
+from src.core.PipelineComponent import PipelineComponent
+from src.services import ProcessingStateManager  
 
 class Listener(PipelineComponent):
     def __init__(self, directory, state_manager):
