@@ -1,7 +1,4 @@
 import uuid # for generating Unique id for error_id
-from src.services.Logger import Logger
-from src.services.EmailNotifier import EmailNotifier
-from datetime import datetime
 class ErrorHandler:
     def __init__(self, logger, email_notifier):
         self.logger = logger
