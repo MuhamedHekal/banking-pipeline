@@ -16,11 +16,11 @@ class Listener(PipelineComponent):
 
     def _get_new_files(self):
         new_files = []
-        for file_name in os.listdir(self.directory):
-            file_path = os.path.join(self.directory, file_name)
-
-            if os.path.isdir(file_path):
-                continue  
+        for root, _, filenames in os.walk(self.directory):
+            for filename in filenames:
+                if (filename.startswith('.')):
+                    continue
+                file_path = os.path.join(root, filename)
 
             if not self.state_manager.is_processed(file_path):
                 new_files.append(file_path)
