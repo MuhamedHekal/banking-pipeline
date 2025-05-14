@@ -3,7 +3,8 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 import time
 from src.core.PipelineComponent import PipelineComponent
-from src.services import ProcessingStateManager  
+from src.services.ProcessingStateManager import ProcessingStateManager  
+
 
 class Listener(PipelineComponent):
     def __init__(self, directory, state_manager):
@@ -21,10 +22,11 @@ class Listener(PipelineComponent):
                 if (filename.startswith('.')):
                     continue
                 file_path = os.path.join(root, filename)
+                print(f"Checking file: {file_path}")
 
-            if not self.state_manager.is_processed(file_path):
-                new_files.append(file_path)
-
+                if not self.state_manager.is_processed(file_path):
+                    new_files.append(file_path)
+                self.state_manager.mark_processed(file_path)
         return new_files
 
     def start_listening(self, pipeline):
