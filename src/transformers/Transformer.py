@@ -10,13 +10,32 @@ class Transformer(PipelineComponent, ABC):
         pass
 
     def process(self, context):
+        """Process data in context using the transform method"""
+        if not context.data and not context.file_path:
+            context.add_error("No data or file path in context")
+            return context
+            
+        # If data not loaded yet, load it from file
+        if not context.data and context.file_path:
+            data = self.load_data(context.file_path)
+            context.data = data
+            
+        # Transform the data
+        try:
+            transformed_data = self.transform(context)
+            context.data = transformed_data
+        except Exception as e:
+            context.add_error(f"Transformation error: {str(e)}")
+            
         return context
 
-    def _add_data_quality_columns(self, record):
+    def _add_data_quality_columns(self, file_path, record):
         now = datetime.now()
         record['processing_time'] = now.strftime('%Y-%m-%d %H:%M:%S')
-        record['partition_date'] = now.strftime('%Y-%m-%d')
-        record['partition_hour'] = int(now.strftime('%H'))
+        partition_date = file_path.split('/')[1]
+        record['partition_date'] = partition_date
+        partition_hour = file_path.split('/')[2]
+        record['partition_hour'] = partition_hour
         return record
 
     def load_data(self, file_path):
