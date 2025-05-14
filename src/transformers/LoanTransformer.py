@@ -22,14 +22,10 @@ class LoanTransformer(TxtLoader):
             # Encrypt loan reason
             if self.encryptor and 'loan_reason' in record:
                 record['loan_reason'] = self.encryptor.encrypt(record['loan_reason'], f"loan_reason_{record['customer_id']}")
-            
             # Add data quality columns
             self._add_data_quality_columns(record)
         return data
 
-    def _add_data_quality_columns(self, record):
-        #  
-        return record
 
 """
 from src.services.Encryptor import Encryptor
