@@ -34,6 +34,3 @@ class CreditCardTransformer(CsvLoader):
             self._add_data_quality_columns(record)
             
         return data
-
-    def _add_data_quality_columns(self, record):
-       pass
