@@ -22,7 +22,7 @@ class Validator(PipelineComponent):
                 # now validate the schema 
                 schema = self.config['schemas'][file_name]
                 #print(schema)
-                valid = self.validate_schema(context.file_path, schema)
+                valid = self.validate_schema(context.file_path, schema,context.metadata.get('file_type'))
                 if not valid['valid_status'] :
                         context.add_error(f"the file {context.file_path} has invalid schema ")
                         context.add_metadata("validation_result", valid)
@@ -31,23 +31,47 @@ class Validator(PipelineComponent):
                 return context
                        
         
-        def validate_schema(self, file_path, schema):
-                """ return Json object
-                { validation_time: Timestamp , valid_status : true}
-                """
-                result = {}
-                # get header of the file_path
-                with open(file_path, 'r') as f:
-                       header = f.readline()
+        def validate_schema(self, file_path, schema,file_type):
+                result = {
+                'validation_time': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                'valid_status': False
+                }
+                print(file_type)
+                try:
+                        if file_type == ".csv":
+                                # CSV validation
+                                with open(file_path, 'r') as f:
+                                        header = f.readline()
+                                        header_columns = [col.strip() for col in header.split(',')]
+                                        result['valid_status'] = (header_columns == schema['columns'])
+                                
+                        elif file_type == ".txt":
+                                # TXT validation (pipe-delimited)
+                                with open(file_path, 'r') as f:
+                                        header = f.readline()
+                                        header_columns = [col.strip() for col in header.split('|')]
+                                        result['valid_status'] = (header_columns == schema['columns'])
+                                
+                        elif file_type == ".json":
+                                # JSON validation - check if it's valid JSON
+                                import json
+                                with open(file_path, 'r') as f:
+                                        data = json.load(f)
+                                # For JSON, we won't check headers since it doesn't have them
+                                # Instead, we'll trust that if it loads as valid JSON, it's okay
+                                # You could add specific structure validation here if needed
+                                result['valid_status'] = True
+                                
+                        else:
+                                result['valid_status'] = False
+                                result['error'] = f"Unsupported file type: {file_type}"
+                                
+                except Exception as e:
+                        result['valid_status'] = False
+                        result['error'] = str(e)
                 
-                header_columns= [col.strip() for col in header.split(',')]
-                result['validation_time'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                if header_columns == schema['columns']:
-                       result['valid_status'] = True
-                else:
-                       result['valid_status'] = False
                 return result
-                
+                        
 
 """
 testing
