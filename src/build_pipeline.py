@@ -25,11 +25,11 @@ def build_pipeline():
     """Build a complete pipeline"""
     # Create services
     logger = Logger(log_file="logs/pipeline.log")
-    
+    password = os.getenv("EMAIL_PASSWORD")
     email_notifier = EmailNotifier(smtp_server='smtp.gmail.com',
     smtp_port=465,
     sender_email='hhekal000@gmail.com',
-    sender_password='ujjkvtsvlmvdyblx',  # use app-specific password for Gmail
+    sender_password=password,  # use app-specific password for Gmail
     recipient_emails=['hamohjdfjxv22@gmail.com'])
     error_handler = ErrorHandler(logger, email_notifier)
     state_manager = ProcessingStateManager()
