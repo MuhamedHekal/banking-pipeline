@@ -79,7 +79,7 @@ def build_pipeline():
     
     # Output components
     pipeline.add_component(parquet_writer)
-    #pipeline.add_component(hdfs_uploader)
+    pipeline.add_component(hdfs_uploader)
     
     return pipeline
 
