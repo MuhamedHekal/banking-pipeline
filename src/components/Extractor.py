@@ -1,4 +1,4 @@
-from ..core import PipelineComponent
+from src.core.PipelineComponent import PipelineComponent
 import os
 import shutil
 class Extractor(PipelineComponent):

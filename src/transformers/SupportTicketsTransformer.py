@@ -1,4 +1,4 @@
-from transformers.loaders import CsvLoader
+from src.transformers.loaders.CsvLoader import CsvLoader
 from datetime import datetime
 class SupportTicketsTransformer(CsvLoader):
     def transform(self, data):

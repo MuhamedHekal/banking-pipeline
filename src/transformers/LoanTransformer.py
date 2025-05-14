@@ -29,7 +29,7 @@ class LoanTransformer(TxtLoader):
 
     def _add_data_quality_columns(self, record):
         #  
-        pass
+        return record
 
 """
 from src.services.Encryptor import Encryptor

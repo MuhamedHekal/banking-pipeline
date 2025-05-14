@@ -1,3 +1,0 @@
-2025-05-13T22:49:18.968013 => Application started
-2025-05-13T22:49:18.968299 => Processing data...
-2025-05-13T22:49:18.968429 => Application finished

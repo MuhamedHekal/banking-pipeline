@@ -26,17 +26,21 @@ class ProcessingStateManager:
         except IOError as e:
             raise IOError(f"Error saving state file: {e}")
 
-    def mark_processed(self, file_path,metadata=None):
+    def mark_processed(self, file_path, metadata=None):
+        print(f"Marking as processed: {file_path}")  # Debug log
         self.processed_files[file_path] = {
             "processed": True,
             "timestamp": datetime.now().isoformat(),
             "metadata": metadata or {}
-
+            
         }
         self.save_state()
+        print(f"State saved to: {self.state_file_path}")  # Debug log
 
     def is_processed(self, file_path):
-        return self.processed_files.get(file_path, {}).get("processed", False)
+         print(f"File {file_path} processed: {self.processed_files.get(file_path, {}).get('processed', False)}")
+         return self.processed_files.get(file_path, {}).get("processed", False)
+       
     def get_processing_metadata(self, file_path):
         return self.processed_files.get(file_path, {}).get("metadata", {})
 

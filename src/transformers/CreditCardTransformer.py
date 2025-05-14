@@ -2,9 +2,8 @@ from src.transformers.loaders.CsvLoader import CsvLoader
 from datetime import datetime
 
 class CreditCardTransformer(CsvLoader):
-    def transform(self, file_path):
-        # Load data using the CsvTransformer class's load_data method
-        data = self.load_data(file_path)
+    def transform(self, data):
+        # No longer loading data from file_path, accepting data directly
         for record in data:
             amount_due = float(record["amount_due"])
             amount_paid = float(record["amount_paid"])    

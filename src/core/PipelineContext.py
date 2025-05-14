@@ -17,6 +17,7 @@ class PipelineContext:
             "timestamp": datetime.now().isoformat(),
             "error": str(error)
         })
+        print(f"Error added: {error}")  # Debug log
         return self
 
     def has_errors(self):
