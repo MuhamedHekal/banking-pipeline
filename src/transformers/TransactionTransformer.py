@@ -3,12 +3,13 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from src.transformers.loaders.JsonLoader import JsonLoader
 class TransactionTransformer(JsonLoader):
-    def transform(self, data):
+    def transform(self, context):
+        data = context.data
         for record in data:
             amount = float(record['transaction_amount'])
             record['cost'] = 0.5 + (amount * 0.001)
             record['total_amount'] = amount + record['cost']
-            self._add_data_quality_columns(record)
+            self._add_data_quality_columns(context.file_path, record)
         return data
 
 

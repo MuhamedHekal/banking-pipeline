@@ -4,7 +4,8 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from src.transformers.loaders.CsvLoader import CsvLoader
 class CustomerTransformer(CsvLoader):
-     def transform(self, data):
+     def transform(self, context):
+        data = context.data
         for record in data:
             account_open_date = datetime.strptime(record['account_open_date'], '%Y-%m-%d')
             today = datetime.now()
@@ -18,7 +19,7 @@ class CustomerTransformer(CsvLoader):
             else:
                 record['customer_segment'] = 'Normal'
                 
-            self._add_data_quality_columns(record)
+            self._add_data_quality_columns(context.file_path, record)
           
         return data
 
