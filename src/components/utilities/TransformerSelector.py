@@ -36,18 +36,15 @@ class TransformerSelector(PipelineComponent):
             return context
             
         filename = os.path.basename(context.file_path)
-        transformer = self.transformer_map.get(filename)
         
-        if not transformer:
+        if filename not in self.transformer_map:
             context.add_error(f"No transformer found for file: {filename}")
             return context
-        
-        # Load data if needed
-        if hasattr(transformer, 'load_data') and context.data is None:
-            context.data = transformer.load_data(context.file_path)
-        
-        # Transform data and update context
-        if hasattr(transformer, 'transform') and context.data is not None:
-            context.data = transformer.transform(context.data)
-        
-        return context
+            
+        transformer = self.transformer_map[filename]
+        if not transformer:
+            context.add_error(f"Transformer not available for file: {filename}")
+            return context
+            
+        # Apply the selected transformer
+        return transformer.process(context)
