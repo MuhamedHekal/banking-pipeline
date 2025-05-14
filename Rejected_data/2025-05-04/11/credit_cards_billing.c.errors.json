@@ -1,0 +1,19 @@
+{
+  "original_path": "Incoming_data\\2025-05-04\\11\\credit_cards_billing.c",
+  "rejected_timestamp": "2025-05-14T20:10:03.372978",
+  "errors": [
+    {
+      "timestamp": "2025-05-14T20:10:03.365538",
+      "error": "Unsupported file type: .c"
+    },
+    {
+      "timestamp": "2025-05-14T20:10:03.366202",
+      "error": "the credit_cards_billing.c not have a supported schema"
+    }
+  ],
+  "metadata": {
+    "input_date_dir": "2025-05-04",
+    "input_hour_dir": "11",
+    "original_file_path": "Incoming_data\\2025-05-04\\11\\credit_cards_billing.c"
+  }
+}

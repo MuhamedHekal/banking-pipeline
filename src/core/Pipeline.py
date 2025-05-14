@@ -22,36 +22,57 @@ class Pipeline:
         return self
     
     def process_file(self, file_path):
-        try:
-            context = PipelineContext(file_path=file_path)
-            for component in self.components:
-                try:
-                    if self.logger:
-                        self.logger.log(f"Processing {file_path} with {component.__class__.__name__}")
-                    context = component.process(context)
-                    if context.has_errors():
-                        for error in context.errors:
-                            self.logger.log(f"Error during processing: {error['error']}")
-                    if context.should_stop():
-                        if self.logger:
-                            self.logger.log(f"Pipeline stopped by {component.__class__.__name__}")
-                        break
-                except Exception as e:
-                    if self.logger:
-                        self.logger.log(f"Exception in {component.__class__.__name__}: {str(e)}")
-                    context.add_error(f"Exception in {component.__class__.__name__}: {str(e)}")
+        # Process a single file through the pipeline
+        if self.state_manager and self.state_manager.is_processed(file_path):
+            if self.logger:
+                self.logger.log(f"File {file_path} already processed. Skipping.")                
+            return
             
-            # Even if there are errors, we should mark the file as attempted
+        context = PipelineContext(file_path=file_path)
+        
+        if self.logger:
+            self.logger.log(f"Starting processing of {file_path}")
+            
+        try:
+            for component in self.components:
+                if self.logger:
+                    self.logger.log(f"Processing {file_path} with {component.__class__.__name__}")
+                context = component.process(context)
+                if context.should_stop():
+                    if self.logger:
+                        self.logger.log(f"Pipeline stopped by {component.__class__.__name__}")
+                    break
+                    
+            # Check if file was rejected by RejectedFilesHandler
+            was_rejected = context.metadata.get("rejected", False)
+            
             if self.state_manager:
-                self.state_manager.mark_processed(file_path, {"has_errors": context.has_errors()})
+                # Always mark the file as processed, with metadata about rejection status
+                metadata = {
+                    "has_errors": context.has_errors(),
+                    "rejected": was_rejected
+                }
+                self.state_manager.mark_processed(file_path, metadata)
             
             if self.logger:
-                self.logger.log(f"Completed processing of {file_path}")
-            
+                if was_rejected:
+                    self.logger.log(f"File {file_path} rejected due to errors")
+                else:
+                    self.logger.log(f"Completed processing of {file_path}")
+                    
             return context
+                
         except Exception as e:
             if self.error_handler:
-                self.error_handler.handle(e, context)
+                context = self.error_handler.handle(e, context)
+                
+                # Mark as rejected even if unexpected error occurred
+                if self.state_manager:
+                    self.state_manager.mark_processed(file_path, {
+                        "has_errors": True,
+                        "rejected": True,
+                        "unexpected_error": str(e)
+                    })
             else:
                 raise e
     def run(self):

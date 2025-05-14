@@ -1,0 +1,52 @@
+{
+    "Incoming_data\\2024-05-01\\11\\credit_cards_billing.csv": {
+        "processed": true,
+        "timestamp": "2025-05-14T20:11:29.826695",
+        "metadata": {}
+    },
+    "Incoming_data\\2024-05-01\\11\\customer_profiles.csv": {
+        "processed": true,
+        "timestamp": "2025-05-14T20:11:29.830411",
+        "metadata": {}
+    },
+    "Incoming_data\\2024-05-01\\11\\loans.txt": {
+        "processed": true,
+        "timestamp": "2025-05-14T20:11:29.833981",
+        "metadata": {}
+    },
+    "Incoming_data\\2024-05-01\\11\\support_tickets.csv": {
+        "processed": true,
+        "timestamp": "2025-05-14T20:11:29.837569",
+        "metadata": {}
+    },
+    "Incoming_data\\2024-05-01\\11\\transactions.json": {
+        "processed": true,
+        "timestamp": "2025-05-14T20:11:29.840953",
+        "metadata": {}
+    },
+    "Incoming_data\\2025-05-04\\11\\credit_cards_billing.c": {
+        "processed": true,
+        "timestamp": "2025-05-14T20:11:29.844556",
+        "metadata": {}
+    },
+    "Incoming_data\\2025-05-04\\11\\customer_profiles.csv": {
+        "processed": true,
+        "timestamp": "2025-05-14T20:11:29.846991",
+        "metadata": {}
+    },
+    "Incoming_data\\2025-05-04\\11\\loans.txt": {
+        "processed": true,
+        "timestamp": "2025-05-14T20:11:29.849409",
+        "metadata": {}
+    },
+    "Incoming_data\\2025-05-04\\11\\support_tickets.csv": {
+        "processed": true,
+        "timestamp": "2025-05-14T20:11:29.851343",
+        "metadata": {}
+    },
+    "Incoming_data\\2025-05-04\\11\\transactions.json": {
+        "processed": true,
+        "timestamp": "2025-05-14T20:11:29.853348",
+        "metadata": {}
+    }
+}

@@ -20,7 +20,7 @@ from src.components.utilities.TransformerSelector import TransformerSelector
 from src.core.Pipeline import Pipeline
 from src.services.EmailNotifier import EmailNotifier
 from src.services.Encryptor import Encryptor
-
+from src.components.RejectedFilesHandler import RejectedFilesHandler
 def build_pipeline():
     """Build a complete pipeline"""
     # Create services
@@ -60,13 +60,13 @@ def build_pipeline():
     pipeline.set_logger(logger)
     pipeline.set_error_handler(error_handler)
     pipeline.set_state_manager(state_manager)
-    
+    rejected_files_handler = RejectedFilesHandler(rejected_dir="Rejected_data")
     # Add initial components
     pipeline.add_component(listener)
     pipeline.add_component(extractor)
     pipeline.add_component(file_type_detector)
     pipeline.add_component(validator)
-    
+    pipeline.add_component(rejected_files_handler)
     
     # Dynamic transformer component (decides which transformer to use)
     pipeline.add_component(TransformerSelector([
