@@ -5,8 +5,9 @@ class LoanTransformer(TxtLoader):
         self.encryptor = encryptor
 
 
-    def transform(self, data):
+    def transform(self, context):
         "transform the load data"
+        data = context.data
         for record in data:
             # Calculate loan age
             utilization_date = datetime.strptime(record['utilization_date'], '%Y-%m-%d')
@@ -23,7 +24,7 @@ class LoanTransformer(TxtLoader):
             if self.encryptor and 'loan_reason' in record:
                 record['loan_reason'] = self.encryptor.encrypt(record['loan_reason'], f"loan_reason_{record['customer_id']}")
             # Add data quality columns
-            self._add_data_quality_columns(record)
+            self._add_data_quality_columns(context.file_path, record)
         return data
 
 
