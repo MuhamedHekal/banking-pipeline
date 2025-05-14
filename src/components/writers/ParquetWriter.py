@@ -1,4 +1,3 @@
-# First, let's fix the imports
 import os
 import pandas as pd
 from src.core.PipelineComponent import PipelineComponent
@@ -8,7 +7,7 @@ class ParquetWriter(PipelineComponent):
         os.makedirs(self.target_dir, exist_ok=True)
     
     def process(self, context):
-        # Use proper checks for DataFrame instead of direct boolean evaluation
+        # checks for DataFrame and file path
         if not hasattr(context, 'data') or context.data is None or (
                 isinstance(context.data, pd.DataFrame) and context.data.empty):
                 context.add_error("No data in context to write")
